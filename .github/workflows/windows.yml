@@ -22,7 +22,7 @@ jobs:
         cmake -Htest -Bbuild
         cmake --build build
         ./build/Debug/test.exe
-        ! cmake --build build --target format
+        ! cmake --build build --target all-format
 
     - name: Install format dependencies
       env: 
@@ -38,7 +38,7 @@ jobs:
 
     - name: Run format
       shell: bash
-      run: "cmake --build build --target format"
+      run: "cmake --build build --target all-format"
 
     - name: Check clang-format
       shell: bash
@@ -50,15 +50,15 @@ jobs:
 
     - name: Check format
       shell: bash
-      run: "! cmake --build build --target check-format"
+      run: "! cmake --build build --target all-check-format"
 
     - name: Fix format
       shell: bash
-      run: cmake --build build --target fix-format
+      run: cmake --build build --target all-fix-format
 
     - name: Check fixed format
       shell: bash
-      run: cmake --build build --target check-format && ! git diff --exit-code
+      run: cmake --build build --target all-check-format && ! git diff --exit-code
 
     - name: Configure cmake-format with excluded file
       # Not using `bash` to prevent regular expression from being treated as a filesystem path
